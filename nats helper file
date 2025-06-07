@@ -1,0 +1,200 @@
+# NATS CLI Commands Reference
+
+## Connection & Authentication Commands
+
+### Context Management
+- `nats context add <name>` - Add a new context
+- `nats context select <name>` - Select a context
+- `nats context ls` - List all contexts
+- `nats context rm <name>` - Remove a context
+- `nats context show [name]` - Show context details
+- `nats context edit <name>` - Edit a context
+
+### Server Connection
+- `nats server info` - Show server information
+- `nats server ping` - Ping the server
+- `nats server check` - Check server health
+- `nats server request` - Send requests to server
+- `nats server report` - Generate server reports
+
+## Core Messaging Commands
+
+### Publishing
+- `nats pub <subject> <message>` - Publish a message
+- `nats pub <subject> --count=N` - Publish N messages
+- `nats pub <subject> --rate=N` - Publish at rate N msgs/sec
+- `nats pub <subject> --reply=<reply>` - Publish with reply subject
+
+### Subscribing
+- `nats sub <subject>` - Subscribe to subject
+- `nats sub <subject> --queue=<group>` - Subscribe with queue group
+- `nats sub <subject> --raw` - Subscribe showing raw messages
+- `nats sub <subject> --count=N` - Subscribe for N messages only
+
+### Request-Reply
+- `nats req <subject> <message>` - Send request and wait for reply
+- `nats reply <subject> <message>` - Reply to requests on subject
+
+## JetStream Commands
+
+### Stream Management
+- `nats stream add <name>` - Create a stream
+- `nats stream ls` - List streams
+- `nats stream info <name>` - Show stream information
+- `nats stream edit <name>` - Edit stream configuration
+- `nats stream rm <name>` - Remove a stream
+- `nats stream backup <name>` - Backup a stream
+- `nats stream restore <name>` - Restore a stream
+- `nats stream copy <source> <target>` - Copy a stream
+- `nats stream seal <name>` - Seal a stream
+- `nats stream cluster` - Manage stream clustering
+- `nats stream template` - Manage stream templates
+- `nats stream view <name>` - View stream messages
+- `nats stream purge <name>` - Purge stream messages
+- `nats stream report` - Generate stream reports
+
+### Consumer Management
+- `nats consumer add <stream>` - Add consumer to stream
+- `nats consumer ls <stream>` - List consumers for stream
+- `nats consumer info <stream> <consumer>` - Show consumer info
+- `nats consumer edit <stream> <consumer>` - Edit consumer
+- `nats consumer rm <stream> <consumer>` - Remove consumer
+- `nats consumer next <stream> <consumer>` - Get next message
+- `nats consumer sub <stream> <consumer>` - Subscribe via consumer
+
+## Key-Value Store Commands
+
+### KV Operations
+- `nats kv add <bucket>` - Create KV bucket
+- `nats kv ls` - List KV buckets
+- `nats kv info <bucket>` - Show bucket information
+- `nats kv rm <bucket>` - Remove KV bucket
+- `nats kv put <bucket> <key> <value>` - Put key-value pair
+- `nats kv get <bucket> <key>` - Get value by key
+- `nats kv del <bucket> <key>` - Delete key
+- `nats kv keys <bucket>` - List keys in bucket
+- `nats kv history <bucket> <key>` - Show key history
+- `nats kv watch <bucket>` - Watch bucket for changes
+- `nats kv purge <bucket> <key>` - Purge key history
+- `nats kv status <bucket>` - Show bucket status
+
+## Object Store Commands
+
+### Object Operations
+- `nats obj add <bucket>` - Create object bucket
+- `nats obj ls` - List object buckets
+- `nats obj info <bucket>` - Show bucket information
+- `nats obj rm <bucket>` - Remove object bucket
+- `nats obj put <bucket> <file>` - Put object from file
+- `nats obj get <bucket> <object>` - Get object
+- `nats obj del <bucket> <object>` - Delete object
+- `nats obj list <bucket>` - List objects in bucket
+- `nats obj watch <bucket>` - Watch bucket for changes
+- `nats obj status <bucket>` - Show bucket status
+
+## Account Management Commands
+
+### Account Operations
+- `nats account info` - Show account information
+- `nats account ls` - List accounts
+- `nats account report` - Generate account reports
+
+## Service/Micro Commands
+
+### Service Management
+- `nats service add` - Add a service
+- `nats service ls` - List services
+- `nats service info <name>` - Show service information
+- `nats service ping <name>` - Ping a service
+- `nats service request <name>` - Send request to service
+- `nats service schema <name>` - Show service schema
+- `nats service stats <name>` - Show service statistics
+
+## Monitoring & Debugging Commands
+
+### Monitoring
+- `nats events` - Monitor NATS events
+- `nats rtt` - Test round-trip time
+- `nats latency` - Test latency
+- `nats bench` - Run benchmarks
+- `nats traffic` - Monitor traffic
+
+### Debugging
+- `nats server check` - Check server health
+- `nats server ping` - Ping server
+- `nats server report` - Generate reports
+- `nats server ls` - List servers in cluster
+
+## Configuration Commands
+
+### Configuration Management
+- `nats cheat` - Show command cheat sheet
+- `nats completion` - Generate shell completion
+- `nats help` - Show help
+- `nats version` - Show version information
+
+## Schema Commands
+
+### Schema Management
+- `nats schema add` - Add schema
+- `nats schema ls` - List schemas
+- `nats schema info <name>` - Show schema information
+- `nats schema validate` - Validate against schema
+
+## Backup & Restore Commands
+
+### Backup Operations
+- `nats backup` - Backup NATS data
+- `nats restore` - Restore NATS data
+
+## Global Flags
+
+### Connection Options
+- `--server`, `-s` - NATS server URL
+- `--creds` - Credentials file
+- `--nkey` - NKey file
+- `--tlscert` - TLS certificate
+- `--tlskey` - TLS private key
+- `--tlsca` - TLS CA certificate
+- `--timeout` - Request timeout
+- `--connection-name` - Connection name
+
+### Output Options
+- `--json` - JSON output format
+- `--force` - Force operation
+- `--trace` - Enable tracing
+- `--verbose` - Verbose output
+
+### Authentication Options
+- `--user` - Username
+- `--password` - Password
+- `--token` - Authentication token
+
+## Usage Examples
+
+```bash
+# Basic pub/sub
+nats pub greeting "Hello World"
+nats sub greeting
+
+# Create and use a stream
+nats stream add mystream --subjects="events.>"
+nats pub events.user.login "user123 logged in"
+
+# Create consumer and consume messages
+nats consumer add mystream myconsumer
+nats consumer next mystream myconsumer
+
+# Key-Value operations
+nats kv add config
+nats kv put config database.host "localhost"
+nats kv get config database.host
+
+# Service discovery
+nats service ls
+nats service ping myservice
+
+# Monitoring
+nats events
+nats server info
+```
